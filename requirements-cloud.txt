@@ -1,0 +1,41 @@
+# Lightweight profile for memory-constrained hosts (no PyTorch / sentence-transformers).
+# Defaults already fit this profile: LLM_PROVIDER=gemini, EMBEDDINGS_PROVIDER=gemini,
+# USE_RERANKER=false (all via API, no local model weights).
+# Reranking is dropped here; to keep reranking, add an API reranker (see DEPLOYMENT.md).
+
+# --- LangGraph / LangChain core ---
+langgraph>=0.6.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-text-splitters>=0.3.0
+langchain-community>=0.3.0
+
+# --- Model provider (Gemini used for both LLM and embeddings here) ---
+langchain-google-genai>=4.0.0
+# langchain-openai>=0.2.0          # uncomment if LLM_PROVIDER=openai
+# langchain-anthropic>=0.3.0       # uncomment if LLM_PROVIDER=anthropic
+# langchain-cohere>=0.3.0          # uncomment to add Cohere API reranking
+
+# --- Vector store + retrieval ---
+langchain-chroma>=0.1.4
+chromadb>=0.5.0
+rank-bm25>=0.2.2
+
+# --- Ingestion ---
+# Pinned: arxiv>=4.0.0 removed Result.download_pdf(); we download pdf_url ourselves.
+arxiv>=4.0.0
+requests>=2.31.0
+pymupdf>=1.24.0
+
+# --- Web search fallback ---
+tavily-python>=0.5.0
+
+# --- Evaluation (optional in cloud; can be omitted to shrink further) ---
+ragas>=0.2.0
+pandas>=2.0.0
+
+# --- Serving ---
+fastapi>=0.111.0
+uvicorn>=0.30.0
+python-dotenv>=1.0.0
+pydantic>=2.7.0

@@ -1,0 +1,40 @@
+# --- LangGraph / LangChain core ---
+langgraph>=0.6.0
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-text-splitters>=0.3.0
+langchain-community>=0.3.0
+
+# --- Model providers (install what you use; Gemini is the default) ---
+langchain-google-genai>=4.0.0
+langchain-openai>=0.2.0
+langchain-anthropic>=0.3.0
+langchain-huggingface>=0.1.0
+
+# --- Vector store + retrieval ---
+langchain-chroma>=0.1.4
+chromadb>=0.5.0
+rank-bm25>=0.2.2
+sentence-transformers>=3.0.0     # cross-encoder reranker + HF embeddings
+
+# --- Ingestion ---
+# Pinned: arxiv>=4.0.0 removed Result.download_pdf()/download_source(); Result now
+# only exposes pdf_url and we download it ourselves (see app/retrieval/ingest.py).
+arxiv>=4.0.0
+requests>=2.31.0                  # used directly to download PDFs (see note above)
+pymupdf>=1.24.0                   # imported as "fitz"
+
+# --- Web search fallback ---
+tavily-python>=0.5.0
+
+# --- Evaluation ---
+ragas>=0.2.0
+datasets>=2.19.0
+pandas>=2.0.0
+
+# --- Serving / UI ---
+fastapi>=0.111.0
+uvicorn>=0.30.0
+streamlit>=1.36.0
+python-dotenv>=1.0.0
+pydantic>=2.7.0

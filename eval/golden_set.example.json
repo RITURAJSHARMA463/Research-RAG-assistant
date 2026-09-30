@@ -1,0 +1,14 @@
+[
+  {
+    "question": "What problem does the attention mechanism solve compared to recurrence?",
+    "reference": "Attention lets the model relate any two positions in a sequence directly, removing the sequential bottleneck and long-range dependency limits of RNNs, and enabling parallel training."
+  },
+  {
+    "question": "How does retrieval-augmented generation reduce hallucination?",
+    "reference": "By conditioning generation on retrieved external passages, the model grounds its output in evidence instead of relying solely on parametric memory, which lowers fabricated content."
+  },
+  {
+    "question": "What is the role of a reranker in a RAG pipeline?",
+    "reference": "A reranker (often a cross-encoder) reorders an initial candidate set by jointly scoring the query and each passage, improving precision of the top-k passed to the generator."
+  }
+]

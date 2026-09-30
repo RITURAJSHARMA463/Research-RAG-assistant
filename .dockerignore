@@ -1,0 +1,14 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.env
+.hf
+eval/ragas_results.csv
+.DS_Store
+*.egg-info
+.ipynb_checkpoints
+# Keep data/ out of the build context unless you are deliberately baking the index;
+# comment the next line to bake a prebuilt index into the image.
+data

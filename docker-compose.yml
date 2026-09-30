@@ -1,0 +1,32 @@
+# Local full stack: API + Streamlit UI sharing one image and the built index.
+# Build the index first (into ./data), then `docker compose up`.
+services:
+  api:
+    build:
+      context: .
+      args:
+        REQS: requirements.txt          # full fidelity locally
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data                # persist Chroma + BM25 index
+      - hf-cache:/app/.hf               # cache downloaded models between runs
+
+  ui:
+    build:
+      context: .
+      args:
+        REQS: requirements.txt
+    env_file: .env
+    command: streamlit run ui/streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - hf-cache:/app/.hf
+    depends_on:
+      - api
+
+volumes:
+  hf-cache:

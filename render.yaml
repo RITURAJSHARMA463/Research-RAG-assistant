@@ -1,0 +1,36 @@
+# Render Blueprint (Infrastructure-as-Code) for the lightweight cloud profile.
+# Deploys the FastAPI service with a persistent disk for the index.
+#
+# Notes:
+#  - Free web services have 512MB RAM and spin down after 15 min idle. The lightweight
+#    profile (API embeddings, no torch) fits; the full-fidelity profile does NOT — use
+#    a Standard instance (>=2GB) or a VPS/Fly.io for that.
+#  - Set secrets (OPENAI_API_KEY, optional TAVILY_API_KEY) in the Render dashboard.
+#  - After first deploy, open a Shell on the service and run the ingest command once
+#    so the index lands on the persistent disk (see DEPLOYMENT.md).
+
+services:
+  - type: web
+    name: research-rag-assistant
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: starter            # 512MB; bump to "standard" for the full-fidelity profile
+    healthCheckPath: /health
+    envVars:
+      - key: REQS            # build arg consumed by the Dockerfile
+        value: requirements-cloud.txt
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: EMBEDDINGS_PROVIDER
+        value: gemini
+      - key: USE_RERANKER
+        value: "false"
+      - key: GOOGLE_API_KEY
+        sync: false          # set in dashboard (Gemini key from Google AI Studio)
+      - key: TAVILY_API_KEY
+        sync: false          # optional
+    disk:
+      name: index
+      mountPath: /app/data
+      sizeGB: 1
